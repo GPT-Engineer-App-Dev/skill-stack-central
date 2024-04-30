@@ -4,10 +4,10 @@ import { FaSearch, FaEnvelope } from "react-icons/fa";
 
 // Mock data for developers
 const developers = [
-  { id: 1, name: "John Doe", location: "New York, USA", technologies: ["React", "Node.js"], image: 'https://images.unsplash.com/photo-1469833120660-1a218b53d28a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwZGV2ZWxvcGVyfGVufDB8fHx8MTcxNDQ5NDI4MHww&ixlib=rb-4.0.3&q=80&w=1080' },
-  { id: 2, name: "Jane Smith", location: "Berlin, Germany", technologies: ["Go", ".NET"], image: 'https://images.unsplash.com/photo-1599314530867-e4977662048b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzE0NDk0MjgwfDA&ixlib=rb-4.0.3&q=80&w=1080' },
-  { id: 3, name: "Alice Johnson", location: "London, UK", technologies: ["JavaScript", "React"], image: 'https://images.unsplash.com/photo-1581091877286-979c6f103cad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwyfHxmZW1hbGUlMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzE0NDk0MjgwfDA&ixlib=rb-4.0.3&q=80&w=1080' },
-  { id: 4, name: "Bob Brown", location: "Sydney, Australia", technologies: ["Node.js", "Go"], image: 'https://images.unsplash.com/photo-1598482327649-e8831e1505be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwyfHxtYWxlJTIwZGV2ZWxvcGVyfGVufDB8fHx8MTcxNDQ5NDI4MHww&ixlib=rb-4.0.3&q=80&w=1080' },
+  { id: 1, name: "John Doe", location: "New York, USA", technologies: ["React", "Node.js"], image: "https://images.unsplash.com/photo-1469833120660-1a218b53d28a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwZGV2ZWxvcGVyfGVufDB8fHx8MTcxNDQ5NDI4MHww&ixlib=rb-4.0.3&q=80&w=1080" },
+  { id: 2, name: "Jane Smith", location: "Berlin, Germany", technologies: ["Go", ".NET"], image: "https://images.unsplash.com/photo-1599314530867-e4977662048b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzE0NDk0MjgwfDA&ixlib=rb-4.0.3&q=80&w=1080" },
+  { id: 3, name: "Alice Johnson", location: "London, UK", technologies: ["JavaScript", "React"], image: "https://images.unsplash.com/photo-1581091877286-979c6f103cad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwyfHxmZW1hbGUlMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzE0NDk0MjgwfDA&ixlib=rb-4.0.3&q=80&w=1080" },
+  { id: 4, name: "Bob Brown", location: "Sydney, Australia", technologies: ["Node.js", "Go"], image: "https://images.unsplash.com/photo-1598482327649-e8831e1505be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwyfHxtYWxlJTIwZGV2ZWxvcGVyfGVufDB8fHx8MTcxNDQ5NDI4MHww&ixlib=rb-4.0.3&q=80&w=1080" },
 ];
 
 const Index = () => {
@@ -45,7 +45,7 @@ const Index = () => {
         </Flex>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
           {filteredDevelopers.map((dev) => (
-            <Box key={dev.id} p={5} shadow="md" borderWidth="1px" rounded="md">
+            <Box as="a" href={`/developer/${dev.id}`} key={dev.id} p={5} shadow="md" borderWidth="1px" rounded="md" style={{ textDecoration: "none" }}>
               <VStack>
                 <Image borderRadius="full" boxSize="150px" src={dev.image} alt={`Image of ${dev.name}`} />
                 <Text fontWeight="bold">{dev.name}</Text>
