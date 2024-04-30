@@ -13,6 +13,7 @@ const developers = [
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredDevelopers, setFilteredDevelopers] = useState(developers);
+  const [newDeveloper, setNewDeveloper] = useState({ name: "", location: "", technologies: [], image: "" });
   const toast = useToast();
 
   useEffect(() => {
@@ -20,11 +21,14 @@ const Index = () => {
     setFilteredDevelopers(filtered);
   }, [searchTerm]);
 
-  const handleDeveloperClick = (developer) => {
+  const handleAddDeveloper = (e) => {
+    e.preventDefault();
+    setFilteredDevelopers([...filteredDevelopers, { ...newDeveloper, id: filteredDevelopers.length + 1 }]);
+    setNewDeveloper({ name: "", location: "", technologies: [], image: "" });
     toast({
-      title: `Contact ${developer.name}`,
-      description: "This feature is not implemented yet.",
-      status: "info",
+      title: "Developer added",
+      description: `${newDeveloper.name} has been added to the marketplace.`,
+      status: "success",
       duration: 5000,
       isClosable: true,
     });
@@ -43,6 +47,17 @@ const Index = () => {
             Search
           </Button>
         </Flex>
+        <form onSubmit={handleAddDeveloper}>
+          <VStack spacing={4}>
+            <Input placeholder="Name" value={newDeveloper.name} onChange={(e) => setNewDeveloper({ ...newDeveloper, name: e.target.value })} />
+            <Input placeholder="Location" value={newDeveloper.location} onChange={(e) => setNewDeveloper({ ...newDeveloper, location: e.target.value })} />
+            <Input placeholder="Technologies (comma-separated)" value={newDeveloper.technologies} onChange={(e) => setNewDeveloper({ ...newDeveloper, technologies: e.target.value.split(",").map((tech) => tech.trim()) })} />
+            <Input placeholder="Image URL" value={newDeveloper.image} onChange={(e) => setNewDeveloper({ ...newDeveloper, image: e.target.value })} />
+            <Button type="submit" colorScheme="blue">
+              Add Developer
+            </Button>
+          </VStack>
+        </form>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
           {filteredDevelopers.map((dev) => (
             <Box as="a" href={`/developer/${dev.id}`} key={dev.id} p={5} shadow="md" borderWidth="1px" rounded="md" style={{ textDecoration: "none" }}>
@@ -58,7 +73,20 @@ const Index = () => {
                   ))}
                 </HStack>
                 <Spacer />
-                <Button leftIcon={<FaEnvelope />} colorScheme="teal" variant="solid" onClick={() => handleDeveloperClick(dev)}>
+                <Button
+                  leftIcon={<FaEnvelope />}
+                  colorScheme="teal"
+                  variant="solid"
+                  onClick={() =>
+                    toast({
+                      title: `Contact ${dev.name}`,
+                      description: "This feature is not implemented yet.",
+                      status: "info",
+                      duration: 5000,
+                      isClosable: true,
+                    })
+                  }
+                >
                   Message
                 </Button>
               </VStack>
