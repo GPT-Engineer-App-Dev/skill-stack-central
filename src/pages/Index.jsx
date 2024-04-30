@@ -55,8 +55,16 @@ const Index = () => {
         <Text fontSize="lg">Discover top software talent specialized in web technologies like React, Node.js, .NET, Go, and JavaScript.</Text>
         <Flex w="full">
           <Input placeholder="Search by name or technology..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-          <Button ml={2} leftIcon={<FaSearch />} colorScheme="blue">
-            Search
+          <Button
+            ml={2}
+            leftIcon={<FaSearch />}
+            colorScheme="blue"
+            onClick={() => {
+              localStorage.removeItem("auth_token");
+              window.location.href = "/login";
+            }}
+          >
+            Logout Search
           </Button>
         </Flex>
         <form onSubmit={handleAddDeveloper}>
