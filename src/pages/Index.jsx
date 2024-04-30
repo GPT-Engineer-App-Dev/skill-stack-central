@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { client } from "../../lib/crud";
 import { Box, Flex, Text, Input, Button, VStack, HStack, Tag, Image, useToast, Container, Heading, SimpleGrid, Spacer } from "@chakra-ui/react";
 import { FaSearch, FaEnvelope } from "react-icons/fa";
 
@@ -12,7 +13,16 @@ const developers = [
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredDevelopers, setFilteredDevelopers] = useState(developers);
+  const [filteredDevelopers, setFilteredDevelopers] = useState([]);
+
+  useEffect(() => {
+    client.getWithPrefix("developer:").then((data) => {
+      if (data) {
+        const devs = data.map((item) => item.value);
+        setFilteredDevelopers(devs);
+      }
+    });
+  }, []);
   const [newDeveloper, setNewDeveloper] = useState({ name: "", location: "", technologies: [], image: "" });
   const toast = useToast();
 
@@ -23,7 +33,9 @@ const Index = () => {
 
   const handleAddDeveloper = (e) => {
     e.preventDefault();
-    setFilteredDevelopers([...filteredDevelopers, { ...newDeveloper, id: filteredDevelopers.length + 1 }]);
+    const newDev = { ...newDeveloper, id: filteredDevelopers.length + 1 };
+    setFilteredDevelopers([...filteredDevelopers, newDev]);
+    client.set(`developer:${newDev.id}`, newDev);
     setNewDeveloper({ name: "", location: "", technologies: [], image: "" });
     toast({
       title: "Developer added",
